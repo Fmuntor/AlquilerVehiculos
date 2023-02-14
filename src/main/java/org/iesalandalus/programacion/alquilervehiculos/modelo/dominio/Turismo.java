@@ -48,6 +48,9 @@ public class Turismo {
         if (matricula.trim().isEmpty() || !matricula.matches(ER_MATRICULA)) {
             throw new IllegalArgumentException("ERROR: La matrícula no tiene un formato válido.");
         }
+        if(!matricula.matches("^[0-9]{4}[BCDFGHIJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz]{3}$")) {
+            throw new IllegalArgumentException("ERROR: La matrícula no tiene un formato válido.");
+        }
         
         this.matricula = matricula;
 
@@ -94,21 +97,14 @@ public class Turismo {
         if(matricula.isEmpty()) {
             throw new IllegalArgumentException("Matricula vacia.");
         }
-        if(!matricula.matches("^[0-9]{4}[A-Z]{3}$")) {
-            throw new IllegalArgumentException("ERROR: La matrícula no tiene un formato válido.");
-        }
 
-        Turismo turismoConMatricula = new Turismo(null, null, 0, matricula);
-        return turismoConMatricula;
+        return new Turismo("Seat", "ModeloTest", 1000, matricula);
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((marca == null) ? 0 : marca.hashCode());
-        result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
-        result = prime * result + cilindrada;
         result = prime * result + ((matricula == null) ? 0 : matricula.hashCode());
         return result;
     }
@@ -122,18 +118,6 @@ public class Turismo {
         if (getClass() != obj.getClass())
             return false;
         Turismo other = (Turismo) obj;
-        if (marca == null) {
-            if (other.marca != null)
-                return false;
-        } else if (!marca.equals(other.marca))
-            return false;
-        if (modelo == null) {
-            if (other.modelo != null)
-                return false;
-        } else if (!modelo.equals(other.modelo))
-            return false;
-        if (cilindrada != other.cilindrada)
-            return false;
         if (matricula == null) {
             if (other.matricula != null)
                 return false;

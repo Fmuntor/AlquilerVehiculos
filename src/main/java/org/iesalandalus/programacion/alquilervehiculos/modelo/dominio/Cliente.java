@@ -113,7 +113,7 @@ public class Cliente {
         if (Dni == null){
             throw new NullPointerException("ERROR: El DNI no puede ser nulo.");
         }
-        if(Dni.trim().isEmpty() || Dni.length() != 9 || !Dni.matches("^(\\d{8})([-]?)([A-Za-z])$")){
+        if(Dni.trim().isEmpty() || !Dni.matches("^(\\d{8})([-]?)([A-Za-z])$")){
             throw new IllegalArgumentException("ERROR: El DNI no tiene un formato válido.");
         }
         
@@ -130,8 +130,7 @@ public class Cliente {
             throw new IllegalArgumentException("ERROR: La letra del DNI no es correcta.");
         }
         
-        Cliente ClienteConDNI = new Cliente("Nombre_DNI",Dni,"000000000");
-        return ClienteConDNI;
+        return new Cliente("Nombreprueba", Dni, "600000000");
         
     }
 
@@ -139,9 +138,9 @@ public class Cliente {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+        //result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
         result = prime * result + ((Dni == null) ? 0 : Dni.hashCode());
-        result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
+        //result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
         return result;
     }
 
@@ -154,21 +153,25 @@ public class Cliente {
         if (getClass() != obj.getClass())
             return false;
         Cliente other = (Cliente) obj;
+        /*
         if (nombre == null) {
             if (other.nombre != null)
                 return false;
         } else if (!nombre.equals(other.nombre))
             return false;
+        */
         if (Dni == null) {
             if (other.Dni != null)
                 return false;
         } else if (!Dni.equals(other.Dni))
             return false;
+        /*
         if (telefono == null) {
             if (other.telefono != null)
                 return false;
         } else if (!telefono.equals(other.telefono))
             return false;
+            */
         return true;
     }
 
@@ -176,5 +179,4 @@ public class Cliente {
     public String toString() {
         return nombre +" - "+Dni+" ("+telefono+")" ;
     }
-
 }
