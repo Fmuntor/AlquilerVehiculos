@@ -171,9 +171,7 @@ public class Alquiler {
     }
 
     @Override
-    /*public String toString() {
-        return cliente+" <---> "+turismo+", "+fechaAlquiler.format(FORMATO_FECHA)+" - "+"Aún no devuelto "+"("+getPrecio()+"€)";
-    }*/
+    
     public String toString() {
         return String.format("%s <---> %s, %s - %s ("+getPrecio()+"€)",
                 cliente, turismo, fechaAlquiler.format(FORMATO_FECHA), 
@@ -181,13 +179,6 @@ public class Alquiler {
                 (fechaDevolucion == null) ? LocalDate.now().format(FORMATO_FECHA) : "",
                 getPrecio());
     }
-    
-    
-
-
-
-
-    
 
     
 }

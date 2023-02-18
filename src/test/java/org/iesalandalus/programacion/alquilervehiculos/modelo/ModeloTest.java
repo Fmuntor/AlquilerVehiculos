@@ -224,10 +224,10 @@ public class ModeloTest {
 	
 	@Test
 	void getClientesLlamaClientesGet() {
-		List<Cliente> clientesDevueltos = new ArrayList<>();
+		ArrayList<Cliente> clientesDevueltos = new ArrayList<>();
 		clientesDevueltos.add(cliente);
 		when(clientes.get()).thenReturn(clientesDevueltos);
-		List<Cliente> clientesExistentes = modelo.getClientes();
+		ArrayList<Cliente> clientesExistentes = modelo.getClientes();
 		verify(clientes).get();
 		assertNotSame(cliente, clientesExistentes.get(0));
 	}

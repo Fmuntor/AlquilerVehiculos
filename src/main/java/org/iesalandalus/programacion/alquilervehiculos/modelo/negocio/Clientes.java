@@ -28,7 +28,6 @@ public class Clientes {
         if(clientes.size()==0){
             // Si el arraylist está vacio, inserta el primer cliente.
             clientes.add(cliente);
-        
         }else{
             for(int i=0;i<clientes.size();i++){
                 if(clientes.get(i)==cliente){
