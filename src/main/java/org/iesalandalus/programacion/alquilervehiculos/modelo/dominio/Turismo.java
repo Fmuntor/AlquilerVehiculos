@@ -48,7 +48,7 @@ public class Turismo {
         if (matricula.trim().isEmpty() || !matricula.matches(ER_MATRICULA)) {
             throw new IllegalArgumentException("ERROR: La matrícula no tiene un formato válido.");
         }
-        if(!matricula.matches("^[0-9]{4}[BCDFGHIJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz]{3}$")) {
+        if(!matricula.matches("^[0-9]{4}[BCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz]{3}$")) {
             throw new IllegalArgumentException("ERROR: La matrícula no tiene un formato válido.");
         }
         
@@ -90,12 +90,14 @@ public class Turismo {
     }
 
     public static Turismo getTurismoConMatricula(String matricula) {
-        /* L90-91 Y L127-128 TESTs*/
         if(matricula==null) {
             throw new NullPointerException("ERROR: La matrícula no puede ser nula.");
         }
-        if(matricula.isEmpty()) {
-            throw new IllegalArgumentException("Matricula vacia.");
+        if (matricula.trim().isEmpty() || !matricula.matches("^[0-9]{4}[A-Z]{3}$")) {
+            throw new IllegalArgumentException("ERROR: La matrícula no tiene un formato válido.");
+        }
+        if(!matricula.matches("^[0-9]{4}[BCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz]{3}$")) {
+            throw new IllegalArgumentException("ERROR: La matrícula no tiene un formato válido.");
         }
 
         return new Turismo("Seat", "ModeloTest", 1000, matricula);

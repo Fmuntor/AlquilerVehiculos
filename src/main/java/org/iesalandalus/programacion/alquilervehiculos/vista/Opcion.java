@@ -28,7 +28,7 @@ public enum Opcion {
 
     public static boolean esOrdinalValido(int ordinal){
         if(ordinal<=0||ordinal>Opcion.values().length){
-            return false;
+            throw new ArrayIndexOutOfBoundsException();
         }
         return true;
     }
