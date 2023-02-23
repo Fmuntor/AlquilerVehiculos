@@ -133,8 +133,4 @@ public class Turismo {
         return marca+" "+modelo+" ("+cilindrada+"CV) - "+matricula;
     }
 
-//Seat León (90CV) - 1234BCD
-
-
-    
 }

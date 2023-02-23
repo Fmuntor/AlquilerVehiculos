@@ -95,7 +95,7 @@ public class Alquiler {
         }
         setFechaDevolucion(fechaDevolucion);
     }
-
+    //TODO: LISTAR ALQUILERES DEVUELTOS Y NO DEVUELTOS POR SEPARADO Y ARREGLAR DEVOLUCIONES.
     public int getPrecio() {
         // (precioDia + factorCilindrada) * numDias. El precioDia es 20, el factorCilindrada depende de la cilindrada del turismo alquilado 
         // y es igual a la cilindrada del turismo / 10 y numDias son los días transcurridos entre la fecha de alquiler y la de devolución.

@@ -40,24 +40,17 @@ public class Turismos {
     }    
 
     public Turismo buscar(Turismo turismo){
-        boolean encontrado=false;
         if(turismo==null){
             throw new NullPointerException("ERROR: No se puede buscar un turismo nulo.");
         }
         if(turismos.size()==0){
             return null;
         }
-        for(int i=0;i<=turismos.size();i++){
-            if(turismos.get(i)==turismo){
-                encontrado=true;
-                return turismo;
+        for(Turismo turismo2 : turismos){
+            if(turismo2.getMatricula().equals(turismo.getMatricula())){
+                return turismo2;
             }
-        }
-        if(!encontrado){
-            return null;
-        }else{
-            return turismo;
-        }
+        }return null;
     }
 
     public void borrar(Turismo turismo) throws OperationNotSupportedException{

@@ -29,9 +29,9 @@ public class Clientes {
             // Si el arraylist está vacio, inserta el primer cliente.
             clientes.add(cliente);
         }else{
-            for(int i=0;i<clientes.size();i++){
-                if(clientes.get(i)==cliente){
-                    throw new OperationNotSupportedException("ERROR: Ya existe un cliente con ese DNI.");
+            for(Cliente cliente2 : clientes){
+                if(cliente2.getDni().equals(cliente.getDni())){
+                    throw new OperationNotSupportedException("ERROR: Ya existe un cliente con ese DNI: "+cliente2);
                 }
             }
             clientes.add(cliente);
@@ -46,9 +46,9 @@ public class Clientes {
         if(clientes.size()==0){
             return null;
         }
-        for(int i=0;i<=clientes.size();i++){
-            if(clientes.get(i)==cliente){
-                return cliente;
+        for(Cliente cliente2 : clientes){
+            if(cliente2.getDni().equals(cliente.getDni())){
+                return cliente2;
             }
         }
         return null;

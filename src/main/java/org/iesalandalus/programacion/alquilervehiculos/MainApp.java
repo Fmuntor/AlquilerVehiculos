@@ -1,21 +1,24 @@
 package org.iesalandalus.programacion.alquilervehiculos;
 
-//import org.iesalandalus.programacion.alquilervehiculos.controlador.Controlador;
+import javax.naming.OperationNotSupportedException;
+
+import org.iesalandalus.programacion.alquilervehiculos.controlador.Controlador;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.Modelo;
-//import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
-import org.iesalandalus.programacion.alquilervehiculos.vista.Consola;
+import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
 public class MainApp {
+	public static void main(String[] args) throws OperationNotSupportedException {
+		// Crear patrón MVC
+		Vista vista = new Vista();
+		Modelo modelo = new Modelo();
+		Controlador controlador = new Controlador(vista, modelo);
+		
+		// Establecer el controlador en la vista
+		vista.setControlador(controlador);
 
-	public static void main(String[] args) {
-		//Consola.mostrarCabecera("BIENVENIDO!");
-		//Consola.mostrarMenu();
-		//Consola.leerFecha("12/12/1212");
-		//Consola.elegirOpcion();
-		//Consola.leerClienteDNI();
-		//Consola.leerTurismoMatricula();
-		//Consola.leerAlquiler();
-		Consola.leerFechaDevolucion();
+		// Crear modelo y vista
+		controlador.comenzar();
+		
 		// Ánimo!!!!
 	}
 

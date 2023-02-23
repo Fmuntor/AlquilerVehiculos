@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import javax.xml.transform.Source;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
@@ -12,7 +11,6 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
-    private static final String PATRON_FECHA="";
     private static final DateTimeFormatter FORMATO_FECHA=DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private Consola(){}
@@ -32,7 +30,7 @@ public class Consola {
         }
     }
 
-    private static String leerCadena(String mensaje){
+    public static String leerCadena(String mensaje){
         System.out.println(mensaje);
         return Entrada.cadena();  
     }
@@ -51,8 +49,14 @@ public class Consola {
         }while(true);
 
     }
+    // Al leerEntero tener un límite máximo de 17, al ser la cantidad de opciones del enumerado Opcion, he creado este metodo, cuya finalidad es 
+    // unicamente introducir un entero para asignarlo a la cilindrada de un turismo, ya que el valor máximo es superior a 17.
 
-    private static LocalDate leerFecha(String mensaje){
+    private static int leerCilindrada(String mensaje){
+        System.out.println(mensaje);
+        return Entrada.entero();
+    }
+    public static LocalDate leerFecha(String mensaje){
         String fecha="";
         System.out.println(mensaje);
         // al haber un do-while cuya condicion para que deje de iterar es while(true), no saldrá del bucle hasta que se lanze la instrucción return.
@@ -102,7 +106,7 @@ public class Consola {
     public static Turismo leerTurismo(){
         do{
             try{
-                return new Turismo(leerCadena("Introduce la marca: "), leerCadena("Introduce el modelo: "), leerEntero("Introduce la cilindrada"), leerCadena("Introduce la matrícula: "));    
+                return new Turismo(leerCadena("Introduce la marca: "), leerCadena("Introduce el modelo: "), leerCilindrada("Introduce la cilindrada"), leerCadena("Introduce la matrícula: "));    
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }

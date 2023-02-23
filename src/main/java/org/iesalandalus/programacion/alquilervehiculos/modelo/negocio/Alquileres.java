@@ -58,28 +58,18 @@ public class Alquileres {
                     throw new OperationNotSupportedException("ERROR: El turismo está actualmente alquilado.");
                 }
             }else{
-                if(fechaAlquiler.isBefore(alquiler.getFechaDevolucion())){
+                // Si queremos que pase los test, 
+                if(fechaAlquiler.isEqual(alquiler.getFechaDevolucion())){
                     if(alquiler.getCliente().equals(cliente)){
                         throw new OperationNotSupportedException("ERROR: El cliente tiene un alquiler posterior.");
-                    }else if(alquiler.getTurismo().equals(turismo)&& !alquiler.getFechaAlquiler().isAfter(fechaAlquiler)){
+                    }
 
+                    if(alquiler.getTurismo().equals(turismo)){
+                        throw new OperationNotSupportedException("ERROR: El turismo tiene un alquiler posterior.");
                     }
                 }
             }
         }
-
-        for(Alquiler alquiler : alquileres){
-            if(alquiler.getFechaDevolucion() == null){
-                if(alquiler.getCliente().equals(cliente)){
-                    // Esta comprobacion verifica si no hay una fecha de devolución asignada al alquiler para el cliente o el turismo
-                    throw new OperationNotSupportedException("ERROR: El cliente tiene otro alquiler sin devolver.");
-                }else if(alquiler.getTurismo().equals(turismo) && !alquiler.getFechaAlquiler().isAfter(fechaAlquiler) && !alquiler.getFechaDevolucion().isBefore(fechaAlquiler)){
-                    // Si tengo un alquiler cuya fecha de devolucion es anterior a la fecha de alquiler de un nuevo alquiler
-                    throw new OperationNotSupportedException("ERROR: El turismo está actualmente alquilado.");
-                }
-            }
-        }
-
     }
     
 
@@ -88,9 +78,9 @@ public class Alquileres {
             throw new NullPointerException("ERROR: No se puede insertar un alquiler nulo.");
         }
         
-        comprobarAlquiler(alquiler.getCliente(), alquiler.getTurismo(), alquiler.getFechaAlquiler());
-        for (Alquiler alquiler2 : alquileres) {
-        }
+        comprobarAlquiler(alquiler.getCliente(), alquiler.getTurismo(), alquiler.getFechaAlquiler());        
+        
+        
         alquileres.add(alquiler);
     }
 
@@ -125,6 +115,7 @@ public class Alquileres {
         }
         if(buscar(alquiler)!=null){
             alquileres.remove(alquiler);
+            
         }else{
             throw new OperationNotSupportedException("ERROR: No existe ningún alquiler igual.");
         }

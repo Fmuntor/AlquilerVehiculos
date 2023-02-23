@@ -27,15 +27,15 @@ public enum Opcion {
     }
 
     public static boolean esOrdinalValido(int ordinal){
-        if(ordinal<=0||ordinal>Opcion.values().length){
-            throw new ArrayIndexOutOfBoundsException();
+        if(ordinal<0||ordinal>Opcion.values().length){
+            throw new ArrayIndexOutOfBoundsException("Inserta un numero mayor que 0 y menor que 16.");
         }
         return true;
     }
 
     public static Opcion get(int ordinal){
         if(!esOrdinalValido(ordinal)){
-            throw new NullPointerException();
+            throw new NullPointerException("El ordinal introducido es inválido.");
         }
         return Opcion.values()[ordinal];
     }

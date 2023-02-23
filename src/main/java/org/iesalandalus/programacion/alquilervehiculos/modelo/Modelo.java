@@ -23,20 +23,21 @@ public class Modelo {
     public Modelo(){
     }
 
-    public void comenzar(){
+    public void comenzar() throws OperationNotSupportedException{
         clientes = new Clientes();
         alquileres = new Alquileres();
         turismos = new Turismos();
+        clientes.insertar(new Cliente("Juan","75719771E","999999999"));
+        turismos.insertar(new Turismo("Seat", "Panda", 15, "1111BBB"));
+        alquileres.insertar(new Alquiler(clientes.get().get(0), turismos.get().get(0), LocalDate.of(2022, 2, 20)));
+        
     }
 
-    public void terminar(){
-        System.out.println("CHAO");
-    }
+    public void terminar(){}
 
     public void insertar(Cliente cliente) throws OperationNotSupportedException{
-
         clientes.insertar(new Cliente(cliente));
-        
+
     }
 
     public void insertar(Turismo turismo) throws OperationNotSupportedException{
@@ -55,11 +56,6 @@ public class Modelo {
         }
         alquileres.insertar(new Alquiler(alquiler.getCliente(), alquiler.getTurismo(), alquiler.getFechaAlquiler()));
     }
-    /*public  void mostraString(){
-        System.out.println(cliente);
-        System.out.println(turismo);
-        System.out.println(alquiler);
-    }*/
 
     public Cliente buscar(Cliente cliente){
         return clientes.buscar(cliente);
@@ -78,36 +74,76 @@ public class Modelo {
     }
 
     public void devolver(Alquiler alquiler, LocalDate fechaDevolucion) throws NullPointerException, OperationNotSupportedException{
-        if(buscar(alquiler)==null){
-
+        // Si algun alquiler tiene fecha de devolucion nula, y ese alquiler es el mismo que el introducido, se devuelve el alquiler.
+        boolean devuelto=false;
+        for(Alquiler alquilerDev : getAlquileres()){
+            if((alquilerDev.getFechaDevolucion()==null)&&((alquilerDev.getCliente().equals(alquiler.getCliente())))||(alquilerDev.getTurismo().equals(alquiler.getTurismo()))){
+                alquileres.devolver(alquiler, fechaDevolucion);
+                devuelto=true;
+            }
         }
-        alquileres.devolver(alquiler, fechaDevolucion);
-    }
-
-    public void borrar(Cliente cliente){
-        // Buscar al cliente
-        buscar(cliente); 
-        // Borrar todos los alquileres del cliente
-        //for(Alquiler alquiler : getAlquileres(cliente)){
-            borrar(alquiler);
-        //}
-        // Borrar cliente
-        borrar(cliente);
-    }
-
-    public void borrar(Turismo turismo){
-        // Buscar al turismo
-        buscar(turismo);
-        // Borrar todos los alquileres del turismo
-        for(Alquiler alquiler : getAlquileres(turismo)){
-            borrar(alquiler);
+        if(!devuelto){
+            throw new OperationNotSupportedException("ERROR: No hay ningun alquiler sin fecha de devolución para ese cliente o turismo.");
         }
-        // Borrar turismo
-        borrar(turismo);
+
+    }
+    // Se ha añadido un retorno de un booleano si se ha borrado, o devuelve null si no
+    public boolean borrar(Cliente cliente) throws OperationNotSupportedException{
+        boolean borrado = false;
+        if (cliente == null) {
+            throw new NullPointerException("El cliente para borrar no puede ser nulo.");
+        }
+        // Si el cliente tiene un alquiler sin fecha de devolución, impide su borrado
+        for(Alquiler alquiler : getAlquileres()){
+            if((alquiler.getCliente().equals(cliente))&&(alquiler.getFechaDevolucion()==null)){
+                throw new OperationNotSupportedException("ERROR: El cliente introducido tiene un alquiler sin devolver.");
+            }
+        }
+
+        for(Cliente cliente2 : getClientes()){
+            clientes.borrar(cliente2);
+            borrado=true;
+        }
+        if(!borrado){
+            return false;
+        }else{return true;}
     }
 
-    public void borrar(Alquiler alquiler){
-        borrar(alquiler);
+    public boolean borrar(Turismo turismo) throws OperationNotSupportedException{
+        boolean borrado = false;
+        if (turismo == null) {
+            throw new NullPointerException("El cliente para borrar no puede ser nulo.");
+        }
+        // Si el turismo tiene un alquiler sin fecha de devolución, impide su borrado
+        for(Alquiler alquiler : getAlquileres()){
+            if((alquiler.getTurismo().equals(turismo))&&(alquiler.getFechaDevolucion()==null)){
+                throw new OperationNotSupportedException("ERROR: El turismo introducido tiene un alquiler sin devolver.");
+            }
+        }
+        for(Turismo turismo2 : getTurismos()){
+            turismos.borrar(turismo2);
+            borrado=true;
+        }
+        if(!borrado){
+            return false;
+        }else{return true;}
+    }
+
+    public boolean borrar(Alquiler alquiler) throws OperationNotSupportedException{
+        boolean borrado = false;
+        if (alquiler == null) {
+            throw new NullPointerException("El alquiler para borrar no puede ser nulo.");
+        }
+        for(Alquiler alquiler2 : getAlquileres()){
+            alquileres.borrar(alquiler2);
+            // Al eliminar un alquiler, se elimina su cliente asignado, así que he modificado el método para que devuelva un objeto tipo
+            // Cliente, para posteriormente introducirlo al arrayList de clientes para así conservarlo en la base de datos.
+            // clientes.insertar(new Cliente(alquiler2.getCliente()));
+            borrado=true;
+        }
+        if(!borrado){
+            return false;
+        }else{return true;}
     }
 
     public ArrayList<Cliente> getClientes(){
@@ -115,13 +151,13 @@ public class Modelo {
         return ArrayClientes;
     }
 
-    public ArrayList<Cliente> getTurismos(){
-        ArrayList<Cliente> ArrayTurismos = getTurismos();
+    public ArrayList<Turismo> getTurismos(){
+        ArrayList<Turismo> ArrayTurismos = turismos.get();
         return ArrayTurismos;
     }
 
-    public ArrayList<Cliente> getAlquileres(){
-        ArrayList<Cliente> ArrayAlquileres = getAlquileres();
+    public ArrayList<Alquiler> getAlquileres(){
+        ArrayList<Alquiler> ArrayAlquileres = alquileres.get();
         return ArrayAlquileres;
     }
 
