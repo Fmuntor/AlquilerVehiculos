@@ -310,16 +310,6 @@ public class Vista {
                 default:
                     break;
             }break;
-            /*
-            Alquiler alquilerBorrar = Consola.leerTurismoMatricula();
-            if(controlador.buscar(turismoBorrar)==null){
-                System.out.println("No hay turismos con esa matrícula.");
-                break;
-            }
-            if(controlador.borrar(turismoBorrar)==true){
-                System.out.println("Turismo borrado con éxito.");
-            }
-            break;*/
             case LISTAR_CLIENTES:
                 ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
                 listaClientes=controlador.getClientes();
