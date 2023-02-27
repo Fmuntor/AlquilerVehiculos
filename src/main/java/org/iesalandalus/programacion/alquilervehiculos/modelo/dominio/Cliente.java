@@ -153,25 +153,11 @@ public class Cliente {
         if (getClass() != obj.getClass())
             return false;
         Cliente other = (Cliente) obj;
-        /*
-        if (nombre == null) {
-            if (other.nombre != null)
-                return false;
-        } else if (!nombre.equals(other.nombre))
-            return false;
-        */
         if (Dni == null) {
             if (other.Dni != null)
                 return false;
         } else if (!Dni.equals(other.Dni))
             return false;
-        /*
-        if (telefono == null) {
-            if (other.telefono != null)
-                return false;
-        } else if (!telefono.equals(other.telefono))
-            return false;
-            */
         return true;
     }
 

@@ -138,7 +138,6 @@ public class Modelo {
             alquileres.borrar(alquiler2);
             // Al eliminar un alquiler, se elimina su cliente asignado, así que he modificado el método para que devuelva un objeto tipo
             // Cliente, para posteriormente introducirlo al arrayList de clientes para así conservarlo en la base de datos.
-            // clientes.insertar(new Cliente(alquiler2.getCliente()));
             borrado=true;
         }
         if(!borrado){

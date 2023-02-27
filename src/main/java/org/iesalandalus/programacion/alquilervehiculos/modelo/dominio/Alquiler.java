@@ -28,27 +28,11 @@ public class Alquiler {
         if(fechaAlquiler.isAfter(LocalDate.now())){
             throw new IllegalArgumentException("ERROR: La fecha de alquiler no puede ser futura.");
         }
-        /*
-        try {
-            // Analizar la fecha de alquiler con el formato especificado
-            FORMATO_FECHA.parse(fechaAlquiler.toString());
-        } catch (Exception e) {
-            throw new IllegalArgumentException("El formato de la fecha de alquiler no es correcto.");
-        }
-        */
+        
         this.fechaAlquiler = fechaAlquiler;
     }
 
     public void setFechaDevolucion(LocalDate fechaDevolcion){
-        /*if(fechaDevolcion.isEqual(fechaAlquiler) || (fechaDevolcion.isBefore(fechaAlquiler))) {
-            throw new IllegalArgumentException("No puedes devolver un alquiler.");
-        }
-        /*try {
-            // Analizar la fecha de alquiler con el formato especificado
-            FORMATO_FECHA.parse(fechaDevolcion.toString());
-        } catch (Exception e) {
-            throw new IllegalArgumentException("El formato de la fecha de devolucion no es correcto.");
-        }*/
         this.fechaDevolucion = fechaDevolcion;
     }
 
@@ -95,7 +79,6 @@ public class Alquiler {
         }
         setFechaDevolucion(fechaDevolucion);
     }
-    //TODO: LISTAR ALQUILERES DEVUELTOS Y NO DEVUELTOS POR SEPARADO Y ARREGLAR DEVOLUCIONES.
     public int getPrecio() {
         // (precioDia + factorCilindrada) * numDias. El precioDia es 20, el factorCilindrada depende de la cilindrada del turismo alquilado 
         // y es igual a la cilindrada del turismo / 10 y numDias son los días transcurridos entre la fecha de alquiler y la de devolución.
