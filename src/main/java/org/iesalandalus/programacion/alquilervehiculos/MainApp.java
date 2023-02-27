@@ -19,7 +19,6 @@ public class MainApp {
 		// Crear modelo y vista
 		controlador.comenzar();
 		
-		// Ánimo!!!!
 	}
 
 }
