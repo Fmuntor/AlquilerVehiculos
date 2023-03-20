@@ -165,4 +165,14 @@ public class Cliente {
     public String toString() {
         return nombre +" - "+Dni+" ("+telefono+")" ;
     }
+
+    public int compareTo(Cliente c){
+        // Clientes igaules 0
+        // Cliente 1 menor Cliente actual <0
+        // Cliente 1 mayor >0
+        if(nombre==c.getNombre()){
+            return Dni.compareTo(c.getDni());
+        }
+        return nombre.compareTo(c.getNombre());
+    }
 }

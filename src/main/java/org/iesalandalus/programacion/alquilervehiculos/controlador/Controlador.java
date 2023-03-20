@@ -3,24 +3,30 @@ package org.iesalandalus.programacion.alquilervehiculos.controlador;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import javax.naming.OperationNotSupportedException;
-
 import org.iesalandalus.programacion.alquilervehiculos.modelo.Modelo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
 public class Controlador {
-    Modelo modelo;
-    Vista vista;
+    private Modelo modelo;
+    private Vista vista;
 
     public Controlador(Vista vista, Modelo modelo){
+        if (modelo == null) {
+			throw new IllegalArgumentException("ERROR: El modelo no puede ser nulo.");
+		}
+		if (vista == null) {
+			throw new IllegalArgumentException("ERROR: La vista no puede ser nula.");
+		}
+
         this.vista = vista;
         this.modelo = modelo;
+        this.vista.setControlador(this);
     }
 
-    public void comenzar() throws OperationNotSupportedException{
+    public void comenzar() throws Exception{
         modelo.comenzar();
         vista.comenzar();
     }
@@ -30,15 +36,14 @@ public class Controlador {
         vista.terminar();
     }
 
-    public void insertar(Cliente cliente) throws OperationNotSupportedException{
-        modelo.insertar(cliente);
+    public void insertar(Cliente cliente) throws Exception{
     }
 
-    public void insertar(Turismo turismo) throws OperationNotSupportedException{
+    public void insertar(Vehiculo turismo) throws Exception{
         modelo.insertar(turismo);
     }
 
-    public void insertar(Alquiler alquiler) throws OperationNotSupportedException{
+    public void insertar(Alquiler alquiler) throws Exception{
         modelo.insertar(alquiler);
     }
 
@@ -46,7 +51,7 @@ public class Controlador {
         return modelo.buscar(cliente);
     }
 
-    public Turismo buscar(Turismo turismo){
+    public Vehiculo buscar(Vehiculo turismo){
         return modelo.buscar(turismo);
     }
 
@@ -54,21 +59,21 @@ public class Controlador {
         return modelo.buscar(alquiler);
     }
 
-    public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException{
+    public void modificar(Cliente cliente, String nombre, String telefono) throws Exception{
         modelo.modificar(cliente, nombre, telefono);
     }
 
-    public void devolver(Alquiler alquiler, LocalDate FechaDevolucion) throws NullPointerException, OperationNotSupportedException{
+    public void devolver(Alquiler alquiler, LocalDate FechaDevolucion) throws NullPointerException, Exception{
         modelo.devolver(alquiler, FechaDevolucion);
     }
 
-    public boolean borrar(Cliente cliente) throws OperationNotSupportedException{
+    public boolean borrar(Cliente cliente) throws Exception{
         return modelo.borrar(cliente);
     }
-    public boolean borrar(Turismo turismo) throws OperationNotSupportedException{
+    public boolean borrar(Vehiculo turismo) throws Exception{
         return modelo.borrar(turismo);
     }
-    public boolean borrar(Alquiler alquiler) throws OperationNotSupportedException{
+    public boolean borrar(Alquiler alquiler) throws Exception{
         return modelo.borrar(alquiler);
     }
 
@@ -76,7 +81,7 @@ public class Controlador {
         return modelo.getClientes();
     }
 
-    public ArrayList<Turismo> getTurismos(){
+    public ArrayList<Vehiculo> getTurismos(){
         return modelo.getTurismos();
     }
 
