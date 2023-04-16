@@ -7,10 +7,21 @@ import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquileres;
 
 public class Alquileres implements IAlquileres {
+    
+    @Override
+	public void comenzar() {
+		
+	}
+
+	@Override
+	public void terminar() {
+		
+	}
 
     private ArrayList<Alquiler> alquileres;
 
@@ -47,7 +58,6 @@ public class Alquileres implements IAlquileres {
         return alquileresTurismo;
     }
 
-    @Override
     public int getCantidad(){
         return alquileres.size();
     }
@@ -91,19 +101,42 @@ public class Alquileres implements IAlquileres {
     }
 
     @Override
-    public void devolver(Alquiler alquiler, LocalDate fechaDevolucion) throws NullPointerException, OperationNotSupportedException{
-        if (alquiler == null) {
-            throw new NullPointerException("ERROR: No se puede devolver un alquiler nulo.");
-        }
-        if(buscar(alquiler)==null){
-            throw new OperationNotSupportedException("ERROR: No existe ningún alquiler igual.");
-        }
-        for (Alquiler alquilerAux : alquileres){
-            if(alquilerAux.equals(alquiler)){
-                alquilerAux.devolver(fechaDevolucion);
-            }
-        }
-    }
+	public void devolver(Cliente cliente, LocalDate fechaDevolucion) throws Exception {
+		
+		Vehiculo vehiculo = new Turismo("Seat", "León", "0000BBB", 1500);
+		LocalDate fechaAlquiler = LocalDate.of(1990, 1, 1); 
+		
+		Alquiler alquiler = new Alquiler(cliente, vehiculo, fechaAlquiler); 
+		
+		if(buscar(alquiler) == null){
+			
+			throw new NullPointerException("ERROR: No se puede devolver un alquiler nulo.");
+		}
+
+		if(buscar(alquiler) != null){
+			
+			buscar(alquiler).devolver(fechaDevolucion);
+		}
+	}
+
+	@Override
+	public void devolver(Vehiculo vehiculo, LocalDate fechaDevolucion) throws Exception {
+		
+		Cliente cliente = new Cliente("Nombre", "16832383V", "900900900");
+		LocalDate fechaAlquiler = LocalDate.of(1990, 1, 1); 
+		
+		Alquiler alquiler = new Alquiler(cliente, vehiculo, fechaAlquiler); 
+		
+		if(buscar(alquiler) == null){
+			
+			throw new NullPointerException("ERROR: No se puede devolver un alquiler nulo.");
+		}
+
+		if(buscar(alquiler) != null){
+			
+			buscar(alquiler).devolver(fechaDevolucion);
+		}
+	}
 
     @Override
     public Alquiler buscar(Alquiler alquiler){

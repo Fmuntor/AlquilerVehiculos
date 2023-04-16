@@ -1,7 +1,7 @@
 package org.iesalandalus.programacion.alquilervehiculos.controlador;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.Modelo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
@@ -33,10 +33,11 @@ public class Controlador {
 
     public void terminar(){
         modelo.terminar();
-        vista.terminar();
+        System.exit(0);
     }
 
     public void insertar(Cliente cliente) throws Exception{
+        modelo.insertar(cliente);
     }
 
     public void insertar(Vehiculo turismo) throws Exception{
@@ -63,29 +64,51 @@ public class Controlador {
         modelo.modificar(cliente, nombre, telefono);
     }
 
-    public void devolver(Alquiler alquiler, LocalDate FechaDevolucion) throws NullPointerException, Exception{
-        modelo.devolver(alquiler, FechaDevolucion);
+    public void devolver(Cliente cliente, LocalDate FechaDevolucion) throws Exception{
+        modelo.devolver(cliente, FechaDevolucion);
     }
 
-    public boolean borrar(Cliente cliente) throws Exception{
-        return modelo.borrar(cliente);
-    }
-    public boolean borrar(Vehiculo turismo) throws Exception{
-        return modelo.borrar(turismo);
-    }
-    public boolean borrar(Alquiler alquiler) throws Exception{
-        return modelo.borrar(alquiler);
+    public void devolver(Vehiculo vehiculo, LocalDate FechaDevolucion) throws Exception{
+        modelo.devolver(vehiculo, FechaDevolucion);
     }
 
-    public ArrayList<Cliente> getClientes(){
-        return modelo.getClientes();
-    }
+    public void borrar(Cliente cliente) throws Exception {
+		
+		modelo.borrar(cliente);
+	}
+	
+	public void borrar(Vehiculo vehiculo) throws Exception{
+		
+		modelo.borrar(vehiculo);
+	}
+	
+	public void borrar(Alquiler alquiler) throws Exception{
+	
+		modelo.borrar(alquiler);
+	}
 
-    public ArrayList<Vehiculo> getTurismos(){
-        return modelo.getTurismos();
-    }
+    public List<Cliente> getClientes() {
+		
+		return modelo.getListaClientes();
+	}
+	
+	public List<Vehiculo> getVehiculos() {
+		
+		return modelo.getListaVehiculos(); 
+	}
+	
+	public List<Alquiler> getAlquileres() {
+		
+		return modelo.getListaAlquileres(); 
+	}	
+	
+	public List<Alquiler> getAlquileres(Cliente cliente) {
+		
+		return modelo.getListaAlquileres(cliente); 
+	}
 
-    public ArrayList<Alquiler> getAlquileres(){
-        return modelo.getAlquileres();
-    }
+	public List<Alquiler> getAlquileres(Vehiculo vehiculo) {
+	
+		return modelo.getListaAlquileres(vehiculo); 
+	}
 }

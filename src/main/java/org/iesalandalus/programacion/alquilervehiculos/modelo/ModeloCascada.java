@@ -2,23 +2,24 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IFuenteDatos;
 
 public class ModeloCascada extends Modelo {
 
-    public ModeloCascada(IFuenteDatos fuenteDatos){
-        setFuenteDatos(fuenteDatos);
-    }
+    public ModeloCascada(FactoriaFuenteDatos factoriaFuenteDatos){
+		
+		super(factoriaFuenteDatos); 
+		factoriaFuenteDatos.crear(); 
+	}
 
     @Override
-    public void insertar(Cliente cliente) throws OperationNotSupportedException{
+    public void insertar(Cliente cliente) throws Exception{
         clientes.insertar(new Cliente(cliente));
     }
 
@@ -28,7 +29,7 @@ public class ModeloCascada extends Modelo {
     }
 
     @Override
-    public void insertar(Alquiler alquiler) throws OperationNotSupportedException, NullPointerException{
+    public void insertar(Alquiler alquiler) throws Exception{
         if (alquiler == null) {
             throw new NullPointerException("ERROR: No se puede realizar un alquiler nulo.");
         }
@@ -56,115 +57,66 @@ public class ModeloCascada extends Modelo {
     }
 
     @Override
-    public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException{
+    public void modificar(Cliente cliente, String nombre, String telefono) throws Exception{
         clientes.modificar(cliente, nombre, telefono);
     }
 
     @Override
-    public void devolver(Alquiler alquiler, LocalDate fechaDevolucion) throws NullPointerException, OperationNotSupportedException{
-        // Si algun alquiler tiene fecha de devolucion nula, y ese alquiler es el mismo que el introducido, se devuelve el alquiler.
-        boolean devuelto=false;
-        for(Alquiler alquilerDev : getAlquileres()){
-            if((alquilerDev.getFechaDevolucion()==null)&&((alquilerDev.getCliente().equals(alquiler.getCliente())))||(alquilerDev.getVehiculo().equals(alquiler.getVehiculo()))){
-                alquileres.devolver(alquiler, fechaDevolucion);
-                devuelto=true;
-            }
-        }
-        if(!devuelto){
-            throw new OperationNotSupportedException("ERROR: No hay ningun alquiler sin fecha de devolución para ese cliente o vehiculo.");
-        }
+	public void devolver(Cliente cliente, LocalDate fechaDevolucion) throws Exception {
+		
+		alquileres.devolver(cliente, fechaDevolucion); 
+	}
 
-    }
+	@Override
+	public void devolver(Vehiculo vehiculo, LocalDate fechaDevolucion) throws Exception {
+		
+		alquileres.devolver(vehiculo, fechaDevolucion); 
+	}
     // Se ha añadido un retorno de un booleano si se ha borrado, o devuelve null si no
+    public void borrar(Cliente cliente) throws Exception {
+		
+		clientes.borrar(cliente);
+	}
+	
+	public void borrar(Vehiculo vehiculo) throws Exception {
+		
+		vehiculos.borrar(vehiculo);
+	}
+	
+	public void borrar(Alquiler alquiler) throws Exception {
+		
+		alquileres.borrar(alquiler);
+	}
+	
     @Override
-    public boolean borrar(Cliente cliente) throws OperationNotSupportedException{
-        boolean borrado = false;
-        if (cliente == null) {
-            throw new NullPointerException("El cliente para borrar no puede ser nulo.");
-        }
-        // Si el cliente tiene un alquiler sin fecha de devolución, impide su borrado
-        for(Alquiler alquiler : getAlquileres()){
-            if((alquiler.getCliente().equals(cliente))&&(alquiler.getFechaDevolucion()==null)){
-                throw new OperationNotSupportedException("ERROR: El cliente introducido tiene un alquiler sin devolver.");
-            }
-        }
+	public List<Cliente> getListaClientes() {
+		
+		return clientes.get();
+	}
 
-        for(Cliente cliente2 : getClientes()){
-            clientes.borrar(cliente2);
-            borrado=true;
-        }
-        if(!borrado){
-            return false;
-        }else{return true;}
-    }
+	@Override
+	public List<Vehiculo> getListaVehiculos() {
+		
+		return vehiculos.get(); 
+	}
 
-    @Override
-    public boolean borrar(Vehiculo vehiculo) throws OperationNotSupportedException{
-        boolean borrado = false;
-        if (vehiculo == null) {
-            throw new NullPointerException("El cliente para borrar no puede ser nulo.");
-        }
-        // Si el vehiculo tiene un alquiler sin fecha de devolución, impide su borrado
-        for(Alquiler alquiler : getAlquileres()){
-            if((alquiler.getVehiculo().equals(vehiculo))&&(alquiler.getFechaDevolucion()==null)){
-                throw new OperationNotSupportedException("ERROR: El vehiculo introducido tiene un alquiler sin devolver.");
-            }
-        }
-        for(Vehiculo turismo2 : getTurismos()){
-            vehiculos.borrar(turismo2);
-            borrado=true;
-        }
-        if(!borrado){
-            return false;
-        }else{return true;}
-    }
+	@Override
+	public List<Alquiler> getListaAlquileres() {
+		
+		return alquileres.get(); 
+	}
 
-    @Override
-    public boolean borrar(Alquiler alquiler) throws OperationNotSupportedException{
-        boolean borrado = false;
-        if (alquiler == null) {
-            throw new NullPointerException("El alquiler para borrar no puede ser nulo.");
-        }
-        for(Alquiler alquiler2 : getAlquileres()){
-            alquileres.borrar(alquiler2);
-            // Al eliminar un alquiler, se elimina su cliente asignado, así que he modificado el método para que devuelva un objeto tipo
-            // Cliente, para posteriormente introducirlo al arrayList de clientes para así conservarlo en la base de datos.
-            borrado=true;
-        }
-        if(!borrado){
-            return false;
-        }else{return true;}
-    }
+	@Override
+	public List<Alquiler> getListaAlquileres(Cliente cliente) {
+		
+		return alquileres.get(cliente);
+	}
 
-    @Override
-    public ArrayList<Cliente> getClientes(){
-        ArrayList<Cliente> ArrayClientes = clientes.get();
-        return ArrayClientes;
-    }
-
-    @Override
-    public ArrayList<Vehiculo> getTurismos(){
-        ArrayList<Vehiculo> ArrayTurismos = vehiculos.get();
-        return ArrayTurismos;
-    }
-
-    @Override
-    public ArrayList<Alquiler> getAlquileres(){
-        ArrayList<Alquiler> ArrayAlquileres = alquileres.get();
-        return ArrayAlquileres;
-    }
-
-    @Override
-    public ArrayList<Alquiler> getAlquileres(Cliente cliente){
-        ArrayList<Alquiler> alquileresCliente = alquileres.get(cliente);
-        return alquileresCliente;
-    }
-
-    @Override
-    public ArrayList<Alquiler> getAlquileres(Vehiculo vehiculo){
-        ArrayList<Alquiler> alquileresTurismo = alquileres.get(vehiculo);
-        return alquileresTurismo;
-    }
+	@Override
+	public List<Alquiler> getListaAlquileres(Vehiculo vehiculo) {
+		
+		return alquileres.get(vehiculo);
+	}
 
 
 }

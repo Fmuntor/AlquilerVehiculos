@@ -1,6 +1,6 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -8,9 +8,11 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 
 public interface IVehiculos {
     
-    ArrayList<Vehiculo> get();
+	void comenzar();
 
-    int getCantidad();
+	void terminar(); 
+    
+    List<Vehiculo> get();
 
     void insertar(Vehiculo turismo) throws OperationNotSupportedException;
 

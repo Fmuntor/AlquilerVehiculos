@@ -1,18 +1,24 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista.texto;
 
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
-import org.iesalandalus.programacion.alquilervehiculos.vista.IFuenteVista;
 import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
 public class VistaTexto extends Vista {
 
-    public VistaTexto(IFuenteVista fuenteVista) {
+    public VistaTexto() {
 
-        setFuenteVista(fuenteVista);
+        super.setControlador(controlador);
         Accion.setVista(this);
     }
 
@@ -22,7 +28,7 @@ public class VistaTexto extends Vista {
             Consola.mostrarCabecera("BIENVENIDO!");
             Consola.mostrarMenu();
             System.out.print("Introduce una opción: ");
-            Accion opcionElegida = Consola.elegirOpcion();
+            Accion opcionElegida = Consola.elegirAccion();
             System.out.println();
             Consola.mostrarCabecera(opcionElegida.toString());
             System.out.println();
@@ -34,7 +40,9 @@ public class VistaTexto extends Vista {
 
     @Override
     public void terminar() {
+        
         System.out.println("HASTA PRONTO!");
+        controlador.terminar();
     }
 
     protected void insertarCliente() throws Exception {
@@ -99,7 +107,7 @@ public class VistaTexto extends Vista {
         }
     }
 
-    protected void buscarCliente() {
+    protected void buscarCliente() throws Exception {
         Cliente clienteBuscado = Consola.leerClienteDNI();
         Cliente clienteEncontrado = controlador.buscar(clienteBuscado);
 
@@ -110,7 +118,7 @@ public class VistaTexto extends Vista {
         System.out.println("¡Cliente encontrado!: " + clienteEncontrado);
     }
 
-    protected void buscarVehiculo() {
+    protected void buscarVehiculo() throws Exception {
         Vehiculo turismoBuscado = Consola.leerTurismoMatricula();
         Vehiculo turismoEncontrado = controlador.buscar(turismoBuscado);
 
@@ -121,7 +129,7 @@ public class VistaTexto extends Vista {
 
     }
 
-    protected void buscarAlquiler() {
+    protected void buscarAlquiler() throws Exception {
 
         System.out.println("1.- BUSCAR POR DNI");
         System.out.println("2.- BUSCAR POR MARICULA");
@@ -196,72 +204,67 @@ public class VistaTexto extends Vista {
         }
     }
 
-    protected void devolverAlquiler() throws Exception {
-        System.out.println("1.- DEVOLVER POR DNI.");
-        System.out.println("2.- DEVOLVER POR MATRÍCULA.");
-        switch (Consola.leerCadena("Introduce la opción deseada: ")) {
-            case "1":
-                Cliente clienteAlquiler = Consola.leerClienteDNI();
-                boolean encontrado = false;
-                if (controlador.buscar(clienteAlquiler) == null) {
-                    System.out.println("No hay clientes con ese DNI.");
-                }
-                // Comprobar si hay clientes con un alquiler
-                for (Alquiler alquiler : controlador.getAlquileres()) {
-                    if (alquiler.getCliente().getDni().equals(clienteAlquiler.getDni())) {
-                        controlador.devolver(alquiler, Consola.leerFechaDevolucion());
-                        encontrado = true;
-                        System.out.println("Alquiler devuelto con éxito!: " + alquiler);
-                        break;
-                    }
-                }
-                if (!encontrado) {
-                    System.out.println("No existe ningun alquiler con ese cliente.");
+    protected void devolverAlquilerCliente() throws Exception {
+        Cliente clienteAlquiler = Consola.leerClienteDNI();
+            boolean encontrado = false;
+            if (controlador.buscar(clienteAlquiler) == null) {
+                System.out.println("No hay clientes con ese DNI.");
+            }
+            // Comprobar si hay clientes con un alquiler
+            for (Alquiler alquiler : controlador.getAlquileres()) {
+                if (alquiler.getCliente().getDni().equals(clienteAlquiler.getDni())) {
+                    controlador.devolver(clienteAlquiler, Consola.leerFechaDevolucion());
+                    encontrado = true;
+                    System.out.println("Alquiler devuelto con éxito!: " + alquiler);
                     break;
                 }
-                break;
-            case "2":
-                Vehiculo turismoAlquiler = Consola.leerTurismoMatricula();
-                boolean encontrado2 = false;
-                if (controlador.buscar(turismoAlquiler) == null) {
-                    System.out.println("No hay turismos con esa matrícula.");
-                }
-                // Comprobar si hay clientes con un alquiler
-                for (Alquiler alquiler : controlador.getAlquileres()) {
-                    if (alquiler.getVehiculo().getMatricula().equals(turismoAlquiler.getMatricula())) {
-                        controlador.devolver(alquiler, Consola.leerFechaDevolucion());
-                        encontrado2 = true;
-                        System.out.println("Alquiler devuelto con éxito!: " + alquiler);
-                        break;
-                    }
-                }
-                if (!encontrado2) {
-                    System.out.println("No existe ningun alquiler con ese vehiculo.");
-                    break;
-                }
-        }
+            }
+            if (!encontrado) {
+                System.out.println("No existe ningun alquiler con ese cliente.");
+            }
     }
 
-    protected void borrarCliente() throws Exception {
-        Cliente clienteBorrar = Consola.leerClienteDNI();
-        if (controlador.buscar(clienteBorrar) == null) {
-            System.out.println("No hay clientes con ese DNI.");
-        }
-        if (controlador.borrar(clienteBorrar) == true) {
-            System.out.println("Cliente borrado con éxito.");
+    protected void devolverAlquilerVehiculo() throws Exception {
+        Vehiculo turismoAlquiler = Consola.leerTurismoMatricula();
+            boolean encontrado2 = false;
+            if (controlador.buscar(turismoAlquiler) == null) {
+                System.out.println("No hay turismos con esa matrícula.");
+            }
+            // Comprobar si hay clientes con un alquiler
+            for (Alquiler alquiler : controlador.getAlquileres()) {
+                if (alquiler.getVehiculo().getMatricula().equals(turismoAlquiler.getMatricula())) {
+                    controlador.devolver(turismoAlquiler, Consola.leerFechaDevolucion());
+                    encontrado2 = true;
+                    System.out.println("Alquiler devuelto con éxito!: " + alquiler);
+                    break;
+                }
+            }
+            if (!encontrado2) {
+                System.out.println("No existe ningun alquiler con ese vehiculo.");
+            }
+    }
 
-        }
+    
+    protected void borrarCliente() throws Exception {
+        try {
+
+			controlador.borrar(Consola.leerClienteDNI());
+
+		} catch (Exception e) {
+
+			System.out.println(e.getMessage());
+		}
     }
 
     protected void borrarVehiculo() throws Exception {
-        Vehiculo turismoBorrar = Consola.leerTurismoMatricula();
-        if (controlador.buscar(turismoBorrar) == null) {
-            System.out.println("No hay turismos con esa matrícula.");
+        try {
 
-        }
-        if (controlador.borrar(turismoBorrar) == true) {
-            System.out.println("Turismo borrado con éxito.");
-        }
+			controlador.borrar(Consola.leerVehiculoMatricula());
+
+		} catch (Exception e) {
+
+			System.out.println(e.getMessage());
+		}
     }
 
     protected void borrarAlquiler() throws Exception {
@@ -313,7 +316,7 @@ public class VistaTexto extends Vista {
     }
 
     public void listarClientes() {
-        ArrayList<Cliente> listaClientes = controlador.getClientes();
+        List<Cliente> listaClientes = controlador.getClientes();
         listaClientes.sort((o1, o2) -> o1.compareTo(o2));
         for (Cliente clienteListado : listaClientes) {
             System.out.println(clienteListado);
@@ -321,7 +324,7 @@ public class VistaTexto extends Vista {
     }
 
     protected void listarVehiculos() {
-        ArrayList<Vehiculo> listaVehiculos = controlador.getTurismos();
+        List<Vehiculo> listaVehiculos = controlador.getVehiculos();
         listaVehiculos.sort((o1, o2) -> o1.compareTo(o2));
         for (Vehiculo turismoListado : listaVehiculos) {
             System.out.println(turismoListado);
@@ -329,7 +332,7 @@ public class VistaTexto extends Vista {
     }
 
     protected void listarAlquileres() {
-        ArrayList<Alquiler> listaAlquileres = new ArrayList<Alquiler>();
+        List<Alquiler> listaAlquileres = new ArrayList<Alquiler>();
         listaAlquileres = controlador.getAlquileres();
         for (Alquiler alquilerListado : listaAlquileres) {
             System.out.println(alquilerListado);
@@ -358,7 +361,7 @@ public class VistaTexto extends Vista {
         
         }
     }
-   
+
     protected void listarAlquileresVehiculo() {
         Vehiculo turismoAlquiler2 = Consola.leerTurismoMatricula();
         boolean encontrado3 = false;
@@ -382,4 +385,56 @@ public class VistaTexto extends Vista {
         }
 
     }
+
+    private Map<TipoVehiculo, Integer> inicializarEstadisticas() {
+		
+		Map<TipoVehiculo, Integer> mapaVehiculos = new EnumMap<>(TipoVehiculo.class);
+		
+		mapaVehiculos.put(TipoVehiculo.AUTOBUS, 0);
+		mapaVehiculos.put(TipoVehiculo.FURGONETA, 0);
+		mapaVehiculos.put(TipoVehiculo.TURISMO, 0);
+		
+		return mapaVehiculos; 
+	}
+
+    public void mostrarEstadisticasMensualesTipoVehiculo() {
+		
+		Consola.mostrarCabecera("Ha elegido la opción: " + Accion.MOSTRAR_ESTADISTICAS_MENSUALES);
+		
+		    Map<TipoVehiculo, Integer> estadisticas = inicializarEstadisticas();
+
+            Month mes = Consola.leerMes().getMonth();
+
+            int contadorTurismos = 0;
+            int contadorAutobus = 0;
+            int contadorFurgoneta = 0;
+		  
+		    for(Alquiler alquiler: controlador.getAlquileres()) {
+		    	
+		    	TipoVehiculo tipoVehiculo = null; 
+		    	
+		    	if((alquiler.getVehiculo() instanceof Turismo) && (alquiler.getFechaAlquiler().getMonth().equals(mes))) {
+                    contadorTurismos++;
+		    		tipoVehiculo = TipoVehiculo.TURISMO;
+		    		
+		    		estadisticas.put(tipoVehiculo, contadorTurismos); 
+		    		
+		    	}else if((alquiler.getVehiculo() instanceof Autobus) && (alquiler.getFechaAlquiler().getMonth().equals(mes))) {
+		    		contadorAutobus++;
+		    		tipoVehiculo = TipoVehiculo.AUTOBUS; 
+		    		
+		    		estadisticas.put(tipoVehiculo, contadorAutobus); 
+		    		
+		    	}else if((alquiler.getVehiculo() instanceof Furgoneta) && (alquiler.getFechaAlquiler().getMonth().equals(mes))) {
+		    		contadorFurgoneta++;
+		    		tipoVehiculo = TipoVehiculo.FURGONETA; 
+		    		
+		    		estadisticas.put(tipoVehiculo, contadorFurgoneta); 
+		    	}
+		    }
+            if(contadorAutobus == 0 && contadorFurgoneta == 0 && contadorTurismos==0){
+                System.out.println("\nNo se han encontrado alquileres en ese mes:");
+            }
+            System.out.println(estadisticas); 
+	}
 }

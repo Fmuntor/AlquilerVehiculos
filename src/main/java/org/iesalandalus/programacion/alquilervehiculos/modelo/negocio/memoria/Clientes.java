@@ -10,6 +10,16 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
 public class Clientes implements IClientes {
     private ArrayList<Cliente> clientes;
 
+    @Override
+	public void comenzar() {
+		
+	}
+
+	@Override
+	public void terminar() {
+		
+	}
+
     public Clientes(){
         clientes = new ArrayList<Cliente>();
     }
@@ -19,7 +29,6 @@ public class Clientes implements IClientes {
         return new ArrayList<Cliente>(clientes);
     }
 
-    @Override
     public int getCantidad(){
         return clientes.size();
     }

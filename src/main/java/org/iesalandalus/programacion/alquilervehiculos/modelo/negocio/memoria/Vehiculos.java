@@ -10,6 +10,16 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IVehiculos
 public class Vehiculos implements IVehiculos {
     private ArrayList<Vehiculo> turismos;
 
+    @Override
+	public void comenzar() {
+		
+	}
+
+	@Override
+	public void terminar() {
+		
+	}
+
     public Vehiculos(){
         turismos = new ArrayList<Vehiculo>();
     }
@@ -19,7 +29,6 @@ public class Vehiculos implements IVehiculos {
         return new ArrayList<Vehiculo>(turismos);
     }
 
-    @Override
     public int getCantidad(){
         return turismos.size();
     }

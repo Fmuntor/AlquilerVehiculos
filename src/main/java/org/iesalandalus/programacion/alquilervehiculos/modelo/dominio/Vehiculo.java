@@ -2,7 +2,7 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 public abstract class Vehiculo {
 
-    private final String ER_MARCA = "^(Seat|Land Rover|KIA|Rolls-Royce|SsangYong)$";
+    private final String ER_MARCA = "^(Seat|Land Rover|KIA|Rolls-Royce|SsangYong|Renault|Ford|Irizar|Iveco|Mercedes-Benz|Volkswagen)$";
     private final String ER_MATRICULA = "^[0-9]{4}[A-Z]{3}$";
 
     private String marca;

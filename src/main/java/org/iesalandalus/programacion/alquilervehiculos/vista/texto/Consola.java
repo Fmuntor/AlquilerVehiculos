@@ -12,11 +12,15 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
-	private static final String PATRON_FECHA="dd/MM/yyyy";
-	private static final DateTimeFormatter FORMATO_FECHA=DateTimeFormatter.ofPattern(PATRON_FECHA);
+	public static final String PATRON_FECHA="dd/MM/yyyy";
+	public static final DateTimeFormatter FORMATO_FECHA=DateTimeFormatter.ofPattern(PATRON_FECHA);
 
     private Consola(){}
 
+    public static void mostrarCadena(String string){
+        System.out.println(string);
+    }
+    
     public static void mostrarCabecera(String mensaje){
         System.out.println(mensaje);
         int numeroletras=mensaje.length();
@@ -94,10 +98,6 @@ public class Consola {
 		
 		return fecha;
 	}
-    public static Accion elegirOpcion(){
-        int entero=leerEntero("");
-        return Accion.values()[entero];
-    }
 
     public static String leerNombre(){
         return leerCadena("Introduce el nombre del cliente:");
@@ -242,9 +242,19 @@ public class Consola {
 
     public static LocalDate leerMes() {
 		
-		LocalDate mes = leerFecha("Introduzca el mes: "); 
-	
-		return mes; 
+		boolean error=false;
+        int mes = 0;
+        do{
+            error=false;
+            
+            mes = leerEntero("Introduzca el mes: ");
+            if(mes < 1 || mes > 12) {
+                System.out.println("El número debe estar entre 1 y 12");
+                error=true;
+            }
+
+        }while(error);
+		return LocalDate.now().withMonth(mes); 
 	}
     
 }

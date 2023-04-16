@@ -31,21 +31,21 @@ public enum Accion {
 	},
 	BUSCAR_CLIENTE("Buscar Cliente") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws Exception {
 
 			vista.buscarCliente();
 		}
 	},
 	BUSCAR_VEHICULO("Buscar Vehículo") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws Exception {
 
 			vista.buscarVehiculo();
 		}
 	},
 	BUSCAR_ALQUILER("Buscar Alquiler") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws Exception {
 
 			vista.buscarAlquiler();
 		}
@@ -55,13 +55,6 @@ public enum Accion {
 		public void ejecutar() throws Exception {
 
 			vista.modificarCliente();
-		}
-	},
-	DEVOLVER_ALQUILER("Devolver Alquiler") {
-		@Override
-		public void ejecutar() throws Exception {
-
-			vista.devolverAlquiler();
 		}
 	},
 	BORRAR_CLIENTE("Borrar Cliente") {
@@ -87,37 +80,58 @@ public enum Accion {
 	},
 	LISTAR_CLIENTES("Listar Clientes") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws Exception {
 
 			vista.listarClientes();
 		}
 	},
 	LISTAR_VEHICULOS("Listar Vehículos") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws Exception {
 
 			vista.listarVehiculos();
 		}
 	},
 	LISTAR_ALQUILERES("Listar Alquileres") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws Exception {
 
 			vista.listarAlquileres();
 		}
 	},
 	LISTAR_ALQUILERES_CLIENTE("Listar Alquileres Cliente") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws Exception {
 
 			vista.listarAlquileresCliente();
 		}
 	},
 	LISTAR_ALQUILERES_VEHICULO("Listar Alquileres Vehículo") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws Exception {
 
 			vista.listarAlquileresVehiculo();
+		}
+	},
+	DEVOLVER_ALQUILER_CLIENTE("Devolver Alquiler del Cliente") {
+		@Override
+		public void ejecutar() throws Exception {
+
+			vista.devolverAlquilerCliente();
+		}
+	},
+	DEVOLVER_ALQUILER_VEHICULO("Devolver Alquiler del Vehiculo") {
+		@Override
+		public void ejecutar() throws Exception {
+
+			vista.devolverAlquilerVehiculo();
+		}
+	},
+	MOSTRAR_ESTADISTICAS_MENSUALES("Mostrar Estadísticas Mensuales") {
+		@Override
+		public void ejecutar() throws Exception {
+
+			vista.mostrarEstadisticasMensualesTipoVehiculo();
 		}
 	};
 

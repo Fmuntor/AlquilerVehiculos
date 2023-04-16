@@ -69,7 +69,7 @@ public class Alquiler {
 
     public void devolver(LocalDate fechaDevolucion) throws NullPointerException, OperationNotSupportedException{
         
-        if(fechaDevolucion==null){
+        if(getFechaDevolucion()!=null){
             throw new NullPointerException("ERROR: La fecha de devolución no puede ser nula.");
         }
         if(fechaDevolucion.isAfter(LocalDate.now())){
@@ -160,7 +160,7 @@ public class Alquiler {
     @Override
     
     public String toString() {
-        return String.format("%s <---> %s, %s - %s ("+getPrecio()+"€)",
+        return String.format("%s <---> %s, %s - %s ("+getPrecio()+" Euros.)",
                 cliente, vehiculo, fechaAlquiler.format(FORMATO_FECHA), 
                 (fechaDevolucion == null) ? "Aún no devuelto" : fechaDevolucion.format(FORMATO_FECHA), 
                 (fechaDevolucion == null) ? LocalDate.now().format(FORMATO_FECHA) : "",

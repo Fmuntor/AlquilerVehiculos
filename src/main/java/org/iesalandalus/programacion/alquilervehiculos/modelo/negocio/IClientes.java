@@ -1,23 +1,23 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio;
 
-import java.util.ArrayList;
-
-import javax.naming.OperationNotSupportedException;
+import java.util.List;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 
 public interface IClientes {
 
-    ArrayList<Cliente> get();
+	void comenzar();
 
-    int getCantidad();
+	void terminar(); 
+	
+	List<Cliente> get();
 
-    void insertar(Cliente cliente) throws OperationNotSupportedException;
+	void insertar(Cliente cliente) throws Exception;
 
-    Cliente buscar(Cliente cliente);
+	void modificar(Cliente cliente, String nombre, String telefono) throws Exception;
 
-    void borrar(Cliente cliente) throws OperationNotSupportedException;
+	Cliente buscar(Cliente cliente);
 
-    void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException;
+	void borrar(Cliente cliente) throws Exception;
 
 }

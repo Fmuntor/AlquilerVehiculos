@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Alquileres>
+    <Alquiler Dni="75719771E" Matricula="1445RTT">
+        <FechaAlquiler Formato="dd/MM/yyyy">11/04/0023</FechaAlquiler>
+        <FechaDevolucion TipoDato="String"/>
+    </Alquiler>
+</Alquileres>
