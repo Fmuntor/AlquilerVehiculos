@@ -6,6 +6,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+import org.iesalandalus.programacion.alquilervehiculos.controlador.Controlador;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
@@ -14,11 +15,17 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
+import javafx.stage.Stage;
+
 public class VistaTexto extends Vista {
 
-    public VistaTexto() {
+    @Override
+	public void start(Stage arg0) throws Exception {
+		
+	}
 
-        super.setControlador(controlador);
+    public VistaTexto() {
+        
         Accion.setVista(this);
     }
 
@@ -42,13 +49,13 @@ public class VistaTexto extends Vista {
     public void terminar() {
         
         System.out.println("HASTA PRONTO!");
-        controlador.terminar();
+        Controlador.getInstancia().terminar();
     }
 
     protected void insertarCliente() throws Exception {
         try {
             Cliente clienteInsertado = Consola.leerCliente();
-            controlador.insertar(clienteInsertado);
+            Controlador.getInstancia().insertar(clienteInsertado);
             System.out.println("¡El cliente " + clienteInsertado.toString() + " se ha creado con éxito!");
 
         } catch (Exception e) {
@@ -59,7 +66,7 @@ public class VistaTexto extends Vista {
     protected void insertarVehiculo() throws Exception {
 
         try {
-            controlador.insertar(Consola.leerVehiculo());
+            Controlador.getInstancia().insertar(Consola.leerVehiculo());
 
         } catch (Exception e) {
 
@@ -73,28 +80,28 @@ public class VistaTexto extends Vista {
 
         switch (Consola.leerCadena("Introduce la opción deseada: ")) {
             case "1":
-                Cliente clienteAlquiler = controlador.buscar(Consola.leerClienteDNI());
+                Cliente clienteAlquiler = Controlador.getInstancia().buscar(Consola.leerClienteDNI());
                 if (clienteAlquiler == null) {
                     throw new NullPointerException("No se puede introducir un alquiler para un cliente inexistente.");
 
                 }
-                Vehiculo turismoAlquiler = controlador.buscar(Consola.leerTurismoMatricula());
+                Vehiculo turismoAlquiler = Controlador.getInstancia().buscar(Consola.leerTurismoMatricula());
                 if (turismoAlquiler == null) {
                     throw new NullPointerException("No se puede introducir un alquiler para un vehiculo inexistente.");
 
                 }
                 Alquiler alquiler1 = new Alquiler(clienteAlquiler, turismoAlquiler,
                         Consola.leerFecha("Introduce la fecha de alquiler:"));
-                controlador.insertar(alquiler1);
+                Controlador.getInstancia().insertar(alquiler1);
                 System.out.println("¡Alquiler creado con éxito!: " + alquiler1);
                 break;
             case "2":
-                Vehiculo turismoAlquiler2 = controlador.buscar(Consola.leerTurismoMatricula());
+                Vehiculo turismoAlquiler2 = Controlador.getInstancia().buscar(Consola.leerTurismoMatricula());
                 if (turismoAlquiler2 == null) {
                     throw new NullPointerException("No se puede introducir un alquiler para un vehiculo inexistente.");
 
                 }
-                Cliente clienteAlquiler2 = controlador.buscar(Consola.leerClienteDNI());
+                Cliente clienteAlquiler2 = Controlador.getInstancia().buscar(Consola.leerClienteDNI());
                 if (clienteAlquiler2 == null) {
                     throw new NullPointerException("No se puede introducir un alquiler para un cliente inexistente.");
 
@@ -102,14 +109,14 @@ public class VistaTexto extends Vista {
 
                 Alquiler alquiler2 = new Alquiler(clienteAlquiler2, turismoAlquiler2,
                         Consola.leerFecha("Introduce la fecha de alquiler:"));
-                controlador.insertar(alquiler2);
+                Controlador.getInstancia().insertar(alquiler2);
                 System.out.println("¡Alquiler creado con éxito!: " + alquiler2);
         }
     }
 
     protected void buscarCliente() throws Exception {
         Cliente clienteBuscado = Consola.leerClienteDNI();
-        Cliente clienteEncontrado = controlador.buscar(clienteBuscado);
+        Cliente clienteEncontrado = Controlador.getInstancia().buscar(clienteBuscado);
 
         if (clienteEncontrado == null) {
             System.out.println("El cliente introducido no existe.");
@@ -120,7 +127,7 @@ public class VistaTexto extends Vista {
 
     protected void buscarVehiculo() throws Exception {
         Vehiculo turismoBuscado = Consola.leerTurismoMatricula();
-        Vehiculo turismoEncontrado = controlador.buscar(turismoBuscado);
+        Vehiculo turismoEncontrado = Controlador.getInstancia().buscar(turismoBuscado);
 
         if (turismoEncontrado == null) {
             System.out.println("El vehiculo introducido no existe.");
@@ -137,11 +144,11 @@ public class VistaTexto extends Vista {
             case "1":
                 Cliente clienteAlquiler = Consola.leerClienteDNI();
                 boolean encontrado1 = false;
-                if (controlador.buscar(clienteAlquiler) == null) {
+                if (Controlador.getInstancia().buscar(clienteAlquiler) == null) {
                     System.out.println("No hay clientes con ese DNI.");
                 }
                 // Comprobar si hay clientes con un alquiler
-                for (Alquiler alquiler : controlador.getAlquileres()) {
+                for (Alquiler alquiler : Controlador.getInstancia().getAlquileres()) {
                     if (alquiler.getCliente().getDni().equals(clienteAlquiler.getDni())) {
                         System.out.println("¡Alquiler encontrado!\n" + alquiler);
                         encontrado1 = true;
@@ -156,11 +163,11 @@ public class VistaTexto extends Vista {
             case "2":
                 Vehiculo turismoAlquiler = Consola.leerTurismoMatricula();
                 boolean encontrado2 = false;
-                if (controlador.buscar(turismoAlquiler) == null) {
+                if (Controlador.getInstancia().buscar(turismoAlquiler) == null) {
                     System.out.println("No hay turismos con esa matrícula.");
                 }
                 // Comprobar si hay clientes con un alquiler
-                for (Alquiler alquiler : controlador.getAlquileres()) {
+                for (Alquiler alquiler : Controlador.getInstancia().getAlquileres()) {
                     if (alquiler.getVehiculo().getMatricula().equals(turismoAlquiler.getMatricula())) {
                         System.out.println("¡Alquiler encontrado!\n" + alquiler);
                         encontrado2 = true;
@@ -177,7 +184,7 @@ public class VistaTexto extends Vista {
     protected void modificarCliente() throws Exception {
         System.out.println("Inserta el DNI del cliente a modificar.");
         Cliente clienteMod = Consola.leerClienteDNI();
-        Cliente clienteParaMod = controlador.buscar(clienteMod);
+        Cliente clienteParaMod = Controlador.getInstancia().buscar(clienteMod);
         if (clienteParaMod == null) {
             throw new NullPointerException("El cliente no existe.");
         }
@@ -187,17 +194,17 @@ public class VistaTexto extends Vista {
         System.out.println("3.- Modificar nombre y teléfono.");
         switch (Consola.leerCadena("Introduce una opción:")) {
             case "1":
-                controlador.modificar(clienteParaMod, Consola.leerNombre(), null);
+                Controlador.getInstancia().modificar(clienteParaMod, Consola.leerNombre(), null);
                 System.out.println("¡Cliente actualizado con éxito!");
                 System.out.println(clienteParaMod);
                 break;
             case "2":
-                controlador.modificar(clienteParaMod, null, Consola.leerTelefono());
+                Controlador.getInstancia().modificar(clienteParaMod, null, Consola.leerTelefono());
                 System.out.println("¡Cliente actualizado con éxito!");
                 System.out.println(clienteParaMod);
                 break;
             case "3":
-                controlador.modificar(clienteParaMod, Consola.leerNombre(), Consola.leerTelefono());
+                Controlador.getInstancia().modificar(clienteParaMod, Consola.leerNombre(), Consola.leerTelefono());
                 System.out.println("¡Cliente actualizado con éxito!");
                 System.out.println(clienteParaMod);
                 break;
@@ -207,13 +214,13 @@ public class VistaTexto extends Vista {
     protected void devolverAlquilerCliente() throws Exception {
         Cliente clienteAlquiler = Consola.leerClienteDNI();
             boolean encontrado = false;
-            if (controlador.buscar(clienteAlquiler) == null) {
+            if (Controlador.getInstancia().buscar(clienteAlquiler) == null) {
                 System.out.println("No hay clientes con ese DNI.");
             }
             // Comprobar si hay clientes con un alquiler
-            for (Alquiler alquiler : controlador.getAlquileres()) {
+            for (Alquiler alquiler : Controlador.getInstancia().getAlquileres()) {
                 if (alquiler.getCliente().getDni().equals(clienteAlquiler.getDni())) {
-                    controlador.devolver(clienteAlquiler, Consola.leerFechaDevolucion());
+                    Controlador.getInstancia().devolver(clienteAlquiler, Consola.leerFechaDevolucion());
                     encontrado = true;
                     System.out.println("Alquiler devuelto con éxito!: " + alquiler);
                     break;
@@ -227,13 +234,13 @@ public class VistaTexto extends Vista {
     protected void devolverAlquilerVehiculo() throws Exception {
         Vehiculo turismoAlquiler = Consola.leerTurismoMatricula();
             boolean encontrado2 = false;
-            if (controlador.buscar(turismoAlquiler) == null) {
+            if (Controlador.getInstancia().buscar(turismoAlquiler) == null) {
                 System.out.println("No hay turismos con esa matrícula.");
             }
             // Comprobar si hay clientes con un alquiler
-            for (Alquiler alquiler : controlador.getAlquileres()) {
+            for (Alquiler alquiler : Controlador.getInstancia().getAlquileres()) {
                 if (alquiler.getVehiculo().getMatricula().equals(turismoAlquiler.getMatricula())) {
-                    controlador.devolver(turismoAlquiler, Consola.leerFechaDevolucion());
+                    Controlador.getInstancia().devolver(turismoAlquiler, Consola.leerFechaDevolucion());
                     encontrado2 = true;
                     System.out.println("Alquiler devuelto con éxito!: " + alquiler);
                     break;
@@ -248,7 +255,7 @@ public class VistaTexto extends Vista {
     protected void borrarCliente() throws Exception {
         try {
 
-			controlador.borrar(Consola.leerClienteDNI());
+			Controlador.getInstancia().borrar(Consola.leerClienteDNI());
 
 		} catch (Exception e) {
 
@@ -259,7 +266,7 @@ public class VistaTexto extends Vista {
     protected void borrarVehiculo() throws Exception {
         try {
 
-			controlador.borrar(Consola.leerVehiculoMatricula());
+			Controlador.getInstancia().borrar(Consola.leerVehiculoMatricula());
 
 		} catch (Exception e) {
 
@@ -274,13 +281,13 @@ public class VistaTexto extends Vista {
             case "1":
                 Cliente clienteAlquiler = Consola.leerClienteDNI();
                 boolean encontrado = false;
-                if (controlador.buscar(clienteAlquiler) == null) {
+                if (Controlador.getInstancia().buscar(clienteAlquiler) == null) {
                     System.out.println("No hay clientes con ese DNI.");
                 }
                 // Comprobar si hay clientes con un alquiler
-                for (Alquiler alquiler : controlador.getAlquileres()) {
+                for (Alquiler alquiler : Controlador.getInstancia().getAlquileres()) {
                     if (alquiler.getCliente().getDni().equals(clienteAlquiler.getDni())) {
-                        controlador.borrar(alquiler);
+                        Controlador.getInstancia().borrar(alquiler);
                         encontrado = true;
                         System.out.println("Alquiler eliminado con éxito!: " + alquiler);
                         break;
@@ -294,13 +301,13 @@ public class VistaTexto extends Vista {
             case "2":
                 Vehiculo turismoAlquiler = Consola.leerTurismoMatricula();
                 boolean encontrado2 = false;
-                if (controlador.buscar(turismoAlquiler) == null) {
+                if (Controlador.getInstancia().buscar(turismoAlquiler) == null) {
                     System.out.println("No hay turismos con esa matrícula.");
                 }
                 // Comprobar si hay clientes con un alquiler
-                for (Alquiler alquiler : controlador.getAlquileres()) {
+                for (Alquiler alquiler : Controlador.getInstancia().getAlquileres()) {
                     if (alquiler.getVehiculo().getMatricula().equals(turismoAlquiler.getMatricula())) {
-                        controlador.borrar(alquiler);
+                        Controlador.getInstancia().borrar(alquiler);
                         encontrado2 = true;
                         System.out.println("Alquiler eliminado con éxito!: " + alquiler);
                         break;
@@ -316,7 +323,7 @@ public class VistaTexto extends Vista {
     }
 
     public void listarClientes() {
-        List<Cliente> listaClientes = controlador.getClientes();
+        List<Cliente> listaClientes = Controlador.getInstancia().getClientes();
         listaClientes.sort((o1, o2) -> o1.compareTo(o2));
         for (Cliente clienteListado : listaClientes) {
             System.out.println(clienteListado);
@@ -324,7 +331,7 @@ public class VistaTexto extends Vista {
     }
 
     protected void listarVehiculos() {
-        List<Vehiculo> listaVehiculos = controlador.getVehiculos();
+        List<Vehiculo> listaVehiculos = Controlador.getInstancia().getVehiculos();
         listaVehiculos.sort((o1, o2) -> o1.compareTo(o2));
         for (Vehiculo turismoListado : listaVehiculos) {
             System.out.println(turismoListado);
@@ -333,7 +340,7 @@ public class VistaTexto extends Vista {
 
     protected void listarAlquileres() {
         List<Alquiler> listaAlquileres = new ArrayList<Alquiler>();
-        listaAlquileres = controlador.getAlquileres();
+        listaAlquileres = Controlador.getInstancia().getAlquileres();
         for (Alquiler alquilerListado : listaAlquileres) {
             System.out.println(alquilerListado);
         }
@@ -342,12 +349,12 @@ public class VistaTexto extends Vista {
     protected void listarAlquileresCliente(){
         Cliente clienteAlquiler = Consola.leerClienteDNI();
         boolean encontrado1 = false;
-        boolean encontrado2 = true;if(controlador.buscar(clienteAlquiler)==null){
+        boolean encontrado2 = true;if(Controlador.getInstancia().buscar(clienteAlquiler)==null){
             System.out.println("No hay clientes con ese DNI.");
         }
         // Comprobar si hay clientes con un alquiler
         for(
-        Alquiler alquiler:controlador.getAlquileres()){
+        Alquiler alquiler:Controlador.getInstancia().getAlquileres()){
             if (alquiler.getCliente().getDni().equals(clienteAlquiler.getDni())) {
                 if (encontrado2) {
                     System.out.println("Alquileres del cliente introducido:");
@@ -365,12 +372,12 @@ public class VistaTexto extends Vista {
     protected void listarAlquileresVehiculo() {
         Vehiculo turismoAlquiler2 = Consola.leerTurismoMatricula();
         boolean encontrado3 = false;
-        boolean encontrado4 = true;if(controlador.buscar(turismoAlquiler2)==null){
+        boolean encontrado4 = true;if(Controlador.getInstancia().buscar(turismoAlquiler2)==null){
             System.out.println("No hay turismos con esa matrícula.");
         }
         // Comprobar si hay turismos con un alquiler
         for(
-        Alquiler alquiler:controlador.getAlquileres()){
+        Alquiler alquiler:Controlador.getInstancia().getAlquileres()){
             if (alquiler.getVehiculo().getMatricula().equals(turismoAlquiler2.getMatricula())) {
                 if (encontrado4) {
                     System.out.println("Alquileres del vehiculo introducido:");
@@ -409,7 +416,7 @@ public class VistaTexto extends Vista {
             int contadorAutobus = 0;
             int contadorFurgoneta = 0;
 		  
-		    for(Alquiler alquiler: controlador.getAlquileres()) {
+		    for(Alquiler alquiler: Controlador.getInstancia().getAlquileres()) {
 		    	
 		    	TipoVehiculo tipoVehiculo = null; 
 		    	

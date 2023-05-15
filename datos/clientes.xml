@@ -8,4 +8,8 @@
         <Nombre TipoDato="String">Fer</Nombre>
         <Telefono TipoDato="String">456987456</Telefono>
     </Cliente>
+    <Cliente Dni="11111111H">
+        <Nombre TipoDato="String">Pepico</Nombre>
+        <Telefono TipoDato="String">789654123</Telefono>
+    </Cliente>
 </Clientes>

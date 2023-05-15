@@ -121,7 +121,7 @@ public class Alquileres implements IAlquileres {
 	
 	@Override
 	public void terminar() {
-		char opcion='a';
+		/*char opcion='a';
 		do{
 			String cadena=Consola.leerCadena("***GUARDAR ALQUILERES***\nElige una opción:\na)Sobreescribir el documento XML. Ruta: ("+RUTA_FICHERO+")\nb)Crear documento XML nuevo.");
 			opcion=cadena.charAt(0);
@@ -145,7 +145,8 @@ public class Alquileres implements IAlquileres {
 
 			default:
 				break;
-		}
+		}*/
+		escribirXml();
 	}
 
 	private void escribirXml() {
@@ -160,7 +161,7 @@ public class Alquileres implements IAlquileres {
 	    UtilidadesXml.domToXml(document, RUTA_FICHERO);
 	}
 
-	private void escribirXml(String ruta, String nombre) {
+	/*private void escribirXml(String ruta, String nombre) {
 	    
 		Document document = UtilidadesXml.crearDomVacio(RAIZ);
 	    
@@ -172,7 +173,7 @@ public class Alquileres implements IAlquileres {
 		String rutaCompleta=ruta.concat("/").concat(nombre).concat(".xml");
 	    
 	    UtilidadesXml.domToXml(document, rutaCompleta);
-	}
+	}*/
 	
 	private Element alquilerToElement(Document dom, Alquiler alquiler) {
 		

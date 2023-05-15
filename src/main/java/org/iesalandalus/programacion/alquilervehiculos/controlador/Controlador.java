@@ -3,16 +3,20 @@ package org.iesalandalus.programacion.alquilervehiculos.controlador;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.iesalandalus.programacion.alquilervehiculos.modelo.FactoriaFuenteDatos;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.Modelo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.ModeloCascada;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
+import org.iesalandalus.programacion.alquilervehiculos.vista.FactoriaVistas;
 import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
 public class Controlador {
     private Modelo modelo;
     private Vista vista;
-
+    private static Controlador instancia; 
+    /*
     public Controlador(Vista vista, Modelo modelo){
         if (modelo == null) {
 			throw new IllegalArgumentException("ERROR: El modelo no puede ser nulo.");
@@ -24,6 +28,25 @@ public class Controlador {
         this.vista = vista;
         this.modelo = modelo;
         this.vista.setControlador(this);
+    }*/
+    private Controlador(){
+
+        FactoriaFuenteDatos fuenteDatos = FactoriaFuenteDatos.FICHEROS;
+        FactoriaVistas vistas = FactoriaVistas.GRAFICOS;
+        //Vista vistaTexto = new VistaTexto();
+        //Controlador controlador = new Controlador(vistaTexto, modeloCascada);
+        Modelo modeloCascada = new ModeloCascada(fuenteDatos);
+        this.modelo = modeloCascada;
+        this.vista = vistas.crear();
+    }
+
+    public static Controlador getInstancia(){
+        if(instancia == null) {
+			
+			instancia = new Controlador(); 
+        }
+
+		return instancia;
     }
 
     public void comenzar() throws Exception{

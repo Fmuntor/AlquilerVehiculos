@@ -10,7 +10,6 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.*;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IVehiculos;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros.utilidades.UtilidadesXml;
-import org.iesalandalus.programacion.alquilervehiculos.vista.texto.Consola;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -118,7 +117,7 @@ public class Vehiculos implements IVehiculos {
 
 	@Override
 	public void terminar() {
-		char opcion='a';
+		/*char opcion='a';
 		do{
 			String cadena=Consola.leerCadena("***GUARDAR VEHICULOS***\nElige una opción:\na)Sobreescribir el documento XML. Ruta: ("+RUTA_FICHERO+")\nb)Crear documento XML nuevo.");
 			opcion=cadena.charAt(0);
@@ -142,7 +141,8 @@ public class Vehiculos implements IVehiculos {
 
 			default:
 				break;
-		}
+		}*/
+		escribirXml();
 	}
 
 	private void escribirXml() {
@@ -157,7 +157,7 @@ public class Vehiculos implements IVehiculos {
 	    UtilidadesXml.domToXml(document, RUTA_FICHERO);
 	}
 
-	private void escribirXml(String ruta, String nombre) {
+	/*private void escribirXml(String ruta, String nombre) {
 	    
 		Document document = UtilidadesXml.crearDomVacio(RAIZ);
 	    
@@ -169,7 +169,7 @@ public class Vehiculos implements IVehiculos {
 		String rutaCompleta=ruta.concat("/").concat(nombre).concat(".xml");
 	    
 	    UtilidadesXml.domToXml(document, rutaCompleta);
-	}
+	}*/
 
 	
 	private Element vehiculoToElement(Document dom, Vehiculo vehiculo) {
@@ -306,13 +306,19 @@ public class Vehiculos implements IVehiculos {
     }
 
     @Override
-    public void borrar(Vehiculo turismo) throws OperationNotSupportedException{
+    public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException{
         boolean borrado=false;
-        if (turismo == null) {
+        if (vehiculo == null) {
             throw new NullPointerException("ERROR: No se puede borrar un turismo nulo.");
         }
+
+		for (Alquiler alquiler : Alquileres.getInstancia().get()) {
+			if((alquiler.getVehiculo().equals(vehiculo)) && (alquiler.getFechaDevolucion()==null)){
+				throw new OperationNotSupportedException("ERROR: No se puede borrar un vehículo que tiene alquileres en curso.");
+			}
+		}
         for(int i=0;i<coleccionVehiculos.size();i++){
-            if(coleccionVehiculos.get(i)==turismo){
+            if(coleccionVehiculos.get(i)==vehiculo){
                 coleccionVehiculos.remove(i);
                 borrado=true;
             }

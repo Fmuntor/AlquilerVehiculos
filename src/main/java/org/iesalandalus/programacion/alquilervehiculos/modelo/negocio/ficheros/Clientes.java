@@ -7,11 +7,11 @@ import java.util.Iterator;
 import java.util.List;
 import javax.naming.OperationNotSupportedException;
 
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros.utilidades.UtilidadesXml;
-import org.iesalandalus.programacion.alquilervehiculos.vista.texto.Consola;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -89,7 +89,7 @@ public class Clientes implements IClientes {
 
 	@Override
 	public void terminar() {
-		char opcion='a';
+		/*char opcion='a';
 		do{
 			String cadena=Consola.leerCadena("***GUARDAR CLIENTES***\nElige una opción:\na)Sobreescribir el documento XML. Ruta: ("+RUTA_FICHERO+")\nb)Crear documento XML nuevo.");
 			opcion=cadena.charAt(0);
@@ -113,7 +113,8 @@ public class Clientes implements IClientes {
 
 			default:
 				break;
-		}
+		}*/
+		escribirXml();
 	}
 
 	private void escribirXml() {
@@ -128,7 +129,7 @@ public class Clientes implements IClientes {
 	    UtilidadesXml.domToXml(document, RUTA_FICHERO);
 	}
 
-	private void escribirXml(String ruta, String nombre) {
+	/*private void escribirXml(String ruta, String nombre) {
 	    
 		Document document = UtilidadesXml.crearDomVacio(RAIZ);
 	    
@@ -140,7 +141,7 @@ public class Clientes implements IClientes {
 		String rutaCompleta=ruta.concat("/").concat(nombre).concat(".xml");
 	    
 	    UtilidadesXml.domToXml(document, rutaCompleta);
-	}
+	}*/
 
 	private Element clienteToElement(Document DocDOM, Cliente cliente) {
 
@@ -226,6 +227,12 @@ public class Clientes implements IClientes {
         if(cliente==null){
             throw new NullPointerException("ERROR: No se puede borrar un cliente nulo.");
         }
+
+		for (Alquiler alquiler : Alquileres.getInstancia().get()) {
+			if((alquiler.getCliente().equals(cliente)) && (alquiler.getFechaDevolucion()==null)){
+				throw new OperationNotSupportedException("ERROR: No se puede borrar un turismo que tiene alquileres en curso.");
+			}
+		}
         for(int i=0;i<coleccionClientes.size();i++){
             if(coleccionClientes.get(i)==cliente){
                 coleccionClientes.remove(i);
