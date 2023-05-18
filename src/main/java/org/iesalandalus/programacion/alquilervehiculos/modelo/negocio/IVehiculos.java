@@ -2,8 +2,6 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio;
 
 import java.util.List;
 
-import javax.naming.OperationNotSupportedException;
-
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 
 public interface IVehiculos {
@@ -14,10 +12,10 @@ public interface IVehiculos {
     
     List<Vehiculo> get();
 
-    void insertar(Vehiculo turismo) throws OperationNotSupportedException;
+    void insertar(Vehiculo turismo) throws Exception;
 
-    Vehiculo buscar(Vehiculo turismo);
+    Vehiculo buscar(Vehiculo turismo) throws Exception;
 
-    void borrar(Vehiculo turismo) throws OperationNotSupportedException;
+    void borrar(Vehiculo turismo) throws Exception;
 
 }

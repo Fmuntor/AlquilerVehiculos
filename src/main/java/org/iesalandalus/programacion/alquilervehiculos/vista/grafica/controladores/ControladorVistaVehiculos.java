@@ -202,6 +202,10 @@ public class ControladorVistaVehiculos implements Initializable {
 
             this.tablaVehiculos.setItems(listaVehiculosVisible);
         }*/
+        buscar();
+    }
+
+    public void buscar(){
         String filtro = campoBuscar.getText().toLowerCase();
         String opcionBuscar = botonSeleccionarBuscar.getValue().toString().toLowerCase();
 
@@ -248,7 +252,6 @@ public class ControladorVistaVehiculos implements Initializable {
         
         tablaVehiculos.refresh();
     }
-
     @FXML
     void ordenar(ActionEvent event) {
 

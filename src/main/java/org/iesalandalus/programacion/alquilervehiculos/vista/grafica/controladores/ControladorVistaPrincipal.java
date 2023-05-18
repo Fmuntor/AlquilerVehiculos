@@ -1,6 +1,5 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista.grafica.controladores;
 
-import org.iesalandalus.programacion.alquilervehiculos.controlador.Controlador;
 import org.iesalandalus.programacion.alquilervehiculos.vista.grafica.VistaGrafica;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -116,7 +115,8 @@ public class ControladorVistaPrincipal extends VistaGrafica {
 		alert.setContentText("¡Hasta pronto!");
 
 		alert.showAndWait();
-		Controlador.getInstancia().terminar();
+		System.exit(0);
+		//Controlador.getInstancia().terminar();
 		
 		/* Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		

@@ -16,7 +16,7 @@ public interface IClientes {
 
 	void modificar(Cliente cliente, String nombre, String telefono) throws Exception;
 
-	Cliente buscar(Cliente cliente);
+	Cliente buscar(Cliente cliente) throws Exception;
 
 	void borrar(Cliente cliente) throws Exception;
 

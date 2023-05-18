@@ -69,11 +69,11 @@ public abstract class Modelo {
 	
 	public abstract void insertar(Alquiler alquiler) throws Exception; 
 	
-	public abstract Cliente buscar(Cliente cliente); 
+	public abstract Cliente buscar(Cliente cliente) throws Exception; 
 	
-	public abstract Vehiculo buscar(Vehiculo vehiculo); 
+	public abstract Vehiculo buscar(Vehiculo vehiculo) throws Exception; 
 
-	public abstract Alquiler buscar(Alquiler alquiler); 
+	public abstract Alquiler buscar(Alquiler alquiler) throws Exception; 
 	
 	public abstract void modificar(Cliente cliente, String nombre, String Telefono) throws Exception; 
 	

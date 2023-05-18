@@ -218,41 +218,44 @@ public class ControladorVistaAlquileres implements Initializable {
 
 		// Si se ha seleccionado Cliente, se comprueba si se ha introducido nombre, DNI
 		// o telefono.
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		for (Alquiler alquiler : listaAlquileres) {
 			if (opcionBuscar.equals("cliente") &&
 					(alquiler.getCliente().getDni().toLowerCase().contains(filtro) ||
 							alquiler.getCliente().getNombre().toLowerCase().contains(filtro) ||
 							alquiler.getCliente().getTelefono().toLowerCase().contains(filtro))) {
 				listaAlquileresVisible.add(alquiler);
-			}else if (alquiler.getVehiculo() instanceof Turismo) {
-				Turismo turismo = (Turismo) alquiler.getVehiculo();
-				if (opcionBuscar.equals("vehiculo") &&
-						turismo.getMarca().toLowerCase().contains(filtro) ||
-						turismo.getModelo().toLowerCase().contains(filtro) ||
-						turismo.getMatricula().toLowerCase().contains(filtro) ||
-						String.valueOf(turismo.getCilindrada()).contains(filtro)) {
-					listaAlquileresVisible.add(alquiler);
+			}else {
+				if (alquiler.getVehiculo() instanceof Turismo) {
+					Vehiculo vehiculo = alquiler.getVehiculo();
+				
+					if (vehiculo instanceof Turismo) {
+						Turismo turismo = (Turismo) vehiculo;
+						if (turismo.getMarca().toLowerCase().contains(filtro) ||
+							turismo.getModelo().toLowerCase().contains(filtro) ||
+							turismo.getMatricula().toLowerCase().contains(filtro) ||
+							String.valueOf(turismo.getCilindrada()).contains(filtro)) {
+							listaAlquileresVisible.add(alquiler);
+						}
+					} else if (vehiculo instanceof Autobus) { 
+						Autobus autobus = (Autobus) vehiculo;
+						if (autobus.getMarca().toLowerCase().contains(filtro) ||
+							autobus.getModelo().toLowerCase().contains(filtro) ||
+							autobus.getMatricula().toLowerCase().contains(filtro) ||
+							String.valueOf(autobus.getPlazas()).contains(filtro)) {
+							listaAlquileresVisible.add(alquiler);
+						}
+					} else if (vehiculo instanceof Furgoneta) {
+						Furgoneta furgoneta = (Furgoneta) vehiculo;
+						if (furgoneta.getMarca().toLowerCase().contains(filtro) ||
+							furgoneta.getModelo().toLowerCase().contains(filtro) ||
+							furgoneta.getMatricula().toLowerCase().contains(filtro) ||
+							String.valueOf(furgoneta.getPlazas()).contains(filtro) ||
+							String.valueOf(furgoneta.getPma()).contains(filtro)) {
+							listaAlquileresVisible.add(alquiler);
+						}
+					}
 				}
-			} else if (alquiler.getVehiculo() instanceof Autobus) { 
-				Autobus autobus = (Autobus) alquiler.getVehiculo();
-				if (opcionBuscar.equals("vehiculo") &&
-						autobus.getMarca().toLowerCase().contains(filtro) ||
-						autobus.getModelo().toLowerCase().contains(filtro) ||
-						autobus.getMatricula().toLowerCase().contains(filtro) ||
-						String.valueOf(autobus.getPlazas()).contains(filtro)) {
-					listaAlquileresVisible.add(alquiler);
-				}
-			} else if (alquiler.getVehiculo() instanceof Furgoneta) {
-				Furgoneta furgoneta = (Furgoneta) alquiler.getVehiculo();
-				if (opcionBuscar.equals("vehiculo") &&
-						furgoneta.getMarca().toLowerCase().contains(filtro) ||
-						furgoneta.getModelo().toLowerCase().contains(filtro) ||
-						furgoneta.getMatricula().toLowerCase().contains(filtro) ||
-						String.valueOf(furgoneta.getPlazas()).contains(filtro) ||
-						String.valueOf(furgoneta.getPma()).contains(filtro)) {
-					listaAlquileresVisible.add(alquiler);
-				}
+				
 			}
 		}
 	}

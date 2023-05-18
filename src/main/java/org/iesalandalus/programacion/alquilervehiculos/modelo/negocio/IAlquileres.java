@@ -25,7 +25,7 @@ public interface IAlquileres {
 	
 	void devolver(Vehiculo vehiculo, LocalDate fechaDevolucion) throws Exception;
 
-	Alquiler buscar(Alquiler alquiler);
+	Alquiler buscar(Alquiler alquiler) throws Exception;
 
 	void borrar(Alquiler alquiler) throws Exception;
 

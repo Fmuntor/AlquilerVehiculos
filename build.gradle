@@ -35,6 +35,8 @@ dependencies {
       
     // Entrada para que el repositorio jitpack.io sepa acceder a la localización de librería entrada
     implementation 'com.github.JRJimenezReyes:entrada:1.0.3'
+    //implementation 'datos/mysql-connector-j-8.0.33.jar'
+    implementation 'mysql:mysql-connector-java:8.0.26'
 }
 
 mainClassName = 'org.iesalandalus.programacion.alquilervehiculos.MainApp'

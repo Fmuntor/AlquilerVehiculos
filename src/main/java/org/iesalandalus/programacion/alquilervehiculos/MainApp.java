@@ -59,7 +59,6 @@ public class MainApp {
 			System.out.println(e.getMessage());
 		}*/
 		try {
-			
 			Controlador.getInstancia().comenzar(); 
 			
 		} catch (Exception e) {

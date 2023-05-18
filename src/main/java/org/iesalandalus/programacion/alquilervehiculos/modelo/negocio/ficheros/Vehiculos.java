@@ -309,7 +309,7 @@ public class Vehiculos implements IVehiculos {
     public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException{
         boolean borrado=false;
         if (vehiculo == null) {
-            throw new NullPointerException("ERROR: No se puede borrar un turismo nulo.");
+            throw new NullPointerException("ERROR: No se puede borrar un vehiculo nulo.");
         }
 
 		for (Alquiler alquiler : Alquileres.getInstancia().get()) {

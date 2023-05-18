@@ -24,7 +24,7 @@ public class ModeloCascada extends Modelo {
     }
 
     @Override
-    public void insertar(Vehiculo vehiculo) throws OperationNotSupportedException{
+    public void insertar(Vehiculo vehiculo) throws Exception{
         vehiculos.insertar(vehiculo);
     }
 
@@ -42,17 +42,28 @@ public class ModeloCascada extends Modelo {
     }
 
     @Override
-    public Cliente buscar(Cliente cliente){
+    public Cliente buscar(Cliente cliente)  throws Exception{
+        /*Cliente clienteBuscar = new Cliente("Null", cliente.getDni(), "111111111");
+        try {
+            clienteBuscar = clientes.buscar(cliente);            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (clienteBuscar == null) {
+            return null;
+        }else{
+            return cliente;
+        }*/
         return clientes.buscar(cliente);
     }
 
     @Override
-    public Vehiculo buscar(Vehiculo vehiculo){
+    public Vehiculo buscar(Vehiculo vehiculo) throws Exception{
         return vehiculos.buscar(vehiculo);
     }
 
     @Override
-    public Alquiler buscar(Alquiler alquiler){
+    public Alquiler buscar(Alquiler alquiler) throws Exception{
         return alquileres.buscar(alquiler);
     }
 

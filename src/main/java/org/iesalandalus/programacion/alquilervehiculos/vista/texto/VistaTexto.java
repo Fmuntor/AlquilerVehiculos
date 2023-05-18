@@ -346,7 +346,7 @@ public class VistaTexto extends Vista {
         }
     }
 
-    protected void listarAlquileresCliente(){
+    protected void listarAlquileresCliente() throws Exception{
         Cliente clienteAlquiler = Consola.leerClienteDNI();
         boolean encontrado1 = false;
         boolean encontrado2 = true;if(Controlador.getInstancia().buscar(clienteAlquiler)==null){
@@ -369,7 +369,7 @@ public class VistaTexto extends Vista {
         }
     }
 
-    protected void listarAlquileresVehiculo() {
+    protected void listarAlquileresVehiculo() throws Exception {
         Vehiculo turismoAlquiler2 = Consola.leerTurismoMatricula();
         boolean encontrado3 = false;
         boolean encontrado4 = true;if(Controlador.getInstancia().buscar(turismoAlquiler2)==null){
